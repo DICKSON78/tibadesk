@@ -399,7 +399,7 @@ export default function RegisterOwnerPage() {
             <div className="w-12 h-12 bg-[#2D4EA8] rounded-xl flex items-center justify-center">
               <Pill className="w-7 h-7 text-[#010736]" />
             </div>
-            <span className="text-xl font-bold text-gray-600">HELIX</span>
+            <span className="text-xl font-bold text-gray-600">TibaDesk</span>
           </Link>
         </div>
 

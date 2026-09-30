@@ -147,6 +147,46 @@ class TibadeskSsoTest extends TestCase
     }
 
     /**
+     * A TibaDesk facility_admin owns the facility, so they arrive as this
+     * pharmacy's owner. The owner role is what the stock, pricing, staff,
+     * payroll and reporting screens hang off, so mapping them down to
+     * pharmacist would quietly hide the whole owner experience.
+     */
+    #[Test]
+    public function a_facility_arrives_as_the_pharmacy_owner(): void
+    {
+        $this->pharmacy();
+
+        $this->signIn(7, 'demo@tibadesk.test', 'facility_admin');
+
+        $this->assertSame('owner', User::where('tibadesk_id', '7')->sole()->role);
+    }
+
+    #[Test]
+    public function a_tibadesk_pharmacist_arrives_as_a_pharmacist(): void
+    {
+        $this->pharmacy();
+
+        $this->signIn(8, 'dispenser@tibadesk.test', 'pharmacist');
+
+        $this->assertSame('pharmacist', User::where('tibadesk_id', '8')->sole()->role);
+    }
+
+    /**
+     * The mapping must not guess upwards. A receptionist is nowhere near
+     * issuing stock, so the coarsest possible local role is the safe landing.
+     */
+    #[Test]
+    public function a_receptionist_cannot_be_promoted_by_arriving(): void
+    {
+        $this->pharmacy();
+
+        $this->signIn(9, 'front-desk@tibadesk.test', 'receptionist');
+
+        $this->assertSame('cashier', User::where('tibadesk_id', '9')->sole()->role);
+    }
+
+    /**
      * The failure this guards against was silent: the application booted and
      * the session was valid, and every screen behind the scope answered 403.
      */

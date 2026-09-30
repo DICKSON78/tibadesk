@@ -10,10 +10,12 @@ config/app.php
 config/tibadesk_sso.php
 dashboard/index.html
 dashboard/public/manifest.json
+dashboard/public/sw.js
 dashboard/src/App.jsx
 dashboard/src/components/DashboardLayout.jsx
 dashboard/src/components/DataTable.jsx
 dashboard/src/components/ErrorBoundary.jsx
+dashboard/src/components/OwnerLayout.jsx
 dashboard/src/components/PlanGate.jsx
 dashboard/src/components/SessionTimeout.jsx
 dashboard/src/components/SubscriptionBanner.jsx

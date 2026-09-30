@@ -120,7 +120,7 @@ export default function ForgotPasswordPage() {
             <div className="w-12 h-12 bg-[#2D4EA8] rounded-xl flex items-center justify-center">
               <Stethoscope className="w-7 h-7 text-[#010736]" />
             </div>
-            <span className="text-gray-600 font-black text-3xl">HELIX</span>
+            <span className="text-gray-600 font-black text-3xl">TibaDesk</span>
           </div>
         </div>
 

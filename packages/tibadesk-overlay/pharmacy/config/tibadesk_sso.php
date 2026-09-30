@@ -46,11 +46,20 @@ return [
     | coarser thing than the permissions here and guessing upwards would hand a
     | receptionist the ability to issue and dispense.
     |
+    | A TibaDesk facility_admin is the person who owns the facility, so they
+    | arrive here as this pharmacy's owner rather than as a pharmacist. That is
+    | the role the owner experience hangs off: stock, pricing, staff, payroll,
+    | ledgers and reports. A TibaDesk pharmacist stays a pharmacist.
+    |
+    | The mapping is only consulted the first time a user arrives. After that the
+    | local role is the application's to decide, so changing this map does not
+    | retroactively promote anyone who already has an account.
+    |
     */
     'pharmacy' => env('TIBADESK_SSO_PHARMACY'),
 
     'role_map' => [
-        'facility_admin' => 'pharmacist',
+        'facility_admin' => 'owner',
         'pharmacist' => 'pharmacist',
         'cashier' => 'cashier',
         'receptionist' => 'cashier',

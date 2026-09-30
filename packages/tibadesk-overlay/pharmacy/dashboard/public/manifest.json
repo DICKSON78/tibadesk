@@ -1,6 +1,6 @@
 {
-  "name": "Helix - Find & Order Medicine",
-  "short_name": "Helix",
+  "name": "TibaDesk Pharmacy",
+  "short_name": "TibaDesk",
   "description": "Find pharmacies, order medicines, and manage prescriptions near you",
   "start_url": "/",
   "scope": "/",
