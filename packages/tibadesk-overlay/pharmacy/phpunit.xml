@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<phpunit xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:noNamespaceSchemaLocation="vendor/phpunit/phpunit/phpunit.xsd"
+         bootstrap="vendor/autoload.php"
+         colors="true"
+>
+    <testsuites>
+        <testsuite name="Unit">
+            <directory>tests/Unit</directory>
+        </testsuite>
+        <testsuite name="Feature">
+            <directory>tests/Feature</directory>
+        </testsuite>
+    </testsuites>
+    <source>
+        <include>
+            <directory>app</directory>
+        </include>
+    </source>
+    <php>
+        <env name="APP_ENV" value="testing"/>
+        <env name="APP_MAINTENANCE_DRIVER" value="file"/>
+        <env name="BCRYPT_ROUNDS" value="4"/>
+        <env name="CACHE_STORE" value="array"/>
+        <!--
+            MySQL, and a database of its own, because this application's
+            migrations alter enum columns and SQLite has no such thing. The name
+            is distinct from the development database so a test run can never
+            truncate the data the application is being worked on.
+        -->
+        <env name="DB_CONNECTION" value="mysql"/>
+        <env name="DB_DATABASE" value="tibadesk_pharmacy_test"/>
+        <env name="DB_URL" value=""/>
+        <env name="MAIL_MAILER" value="array"/>
+        <env name="QUEUE_CONNECTION" value="sync"/>
+        <env name="SESSION_DRIVER" value="array"/>
+        <!--
+            The sign-in assertion is verified against this. A fixed value keeps
+            the tests from depending on a developer's .env, and the secret is
+            supplied to the subject under test by the test itself, so nothing
+            here is a credential for anything.
+        -->
+        <env name="TIBADESK_SSO_SECRET" value="test-assertion-secret"/>
+        <env name="TIBADESK_SSO_AUDIENCE" value="pharmacy"/>
+    </php>
+</phpunit>
