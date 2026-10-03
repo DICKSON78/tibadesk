@@ -1,59 +1,24 @@
 # Upstream files this integration deliberately does not ship.
 #
-# eye is a module inside TibaDesk, not a product with a public face of its own.
-# It brings sixteen marketing pages and a public layout that present it as a
-# separate eye clinic website — a second website alongside TIBADesk-website,
-# reached at /apps/eye/about, /apps/eye/contact and so on. The module opens its
-# own panel instead; see resources/js/components/App.jsx.
+# Intentionally empty.
 #
-# These pages are removed rather than merely unrouted because they cannot be
-# left in place. Any future sync restores them from upstream, so a bare deletion
-# in apps/ would not survive, and a link added later would put a working public
-# site back on screen.
+# This used to list twenty-five files: sixteen marketing pages under
+# resources/js/pages/public/ plus layouts/PublicLayout.jsx, public/assets/js/main.js
+# and the same seven shell components dental drops. Those render this eye centre's
+# own public face. They were deleted because eye is a module inside TibaDesk rather
+# than a product with its own front door, and their router — the SPA's own — could
+# bring a second website back with nothing in the overlay to stop it.
 #
-# Paths are relative to the application root, and are checked by
-# bin/sync-apps.sh --verify — which is what catches a wrong prefix here.
-# One path per line. Blank lines and # comments are ignored.
-
-resources/js/layouts/PublicLayout.jsx
-
-resources/js/pages/public/AboutPage.jsx
-resources/js/pages/public/BlogIndexPage.jsx
-resources/js/pages/public/BlogShowPage.jsx
-resources/js/pages/public/BookAppointmentPage.jsx
-resources/js/pages/public/ContactPage.jsx
-resources/js/pages/public/FacilityPage.jsx
-resources/js/pages/public/FAQPage.jsx
-resources/js/pages/public/HomePage.jsx
-resources/js/pages/public/OutreachPage.jsx
-resources/js/pages/public/PartnersPage.jsx
-resources/js/pages/public/PrivacyPage.jsx
-resources/js/pages/public/ProductsPage.jsx
-resources/js/pages/public/ServicesPage.jsx
-resources/js/pages/public/TeamPage.jsx
-resources/js/pages/public/TermsPage.jsx
-resources/js/pages/public/WhyChooseUsPage.jsx
-
-# The old static marketing site's script. Nothing loads it — not the SPA shell,
-# not a standalone page — and it only ever operated on the markup those pages
-# were built from. It came back with the site's removal by association, not
-# because the panel needs it.
-public/assets/js/main.js
-# The remnants of the same site's shell: a home page, an about page and a
-# services page at the top of resources/js, the header and footer they share,
-# and the SEO component that stamped meta tags onto them. Upstream has already
-# unwired all seven — nothing routes to them and nothing imports them, which is
-# why they are merely dead rather than a second website. They are removed so
-# they cannot be relinked later, and so the next person reading this repository
-# does not find a plausible-looking home page for the module and take it for
-# the intended entry point.
+# They are now shipped and routed nowhere. resources/js/components/App.jsx is the
+# overlay's own, and it redirects / to the panel and imports no public page and no
+# PublicLayout, so all twenty-five are unreachable. They stay in the tree so eye
+# can still be diffed against bestvision and so the marketing content is not lost.
 #
-# components/pdf/Footer is a different file and is used by the report and invoice
-# PDFs. It is not listed here and must not be.
-resources/js/Home.jsx
-resources/js/About.jsx
-resources/js/Services.jsx
-resources/js/Footer.jsx
-resources/js/Navbar.jsx
-resources/js/Navbar.css
-resources/js/components/SEO.jsx
+# The rule is upstream files are never deleted: a module that drops its author's
+# files cannot be diffed back against the source it came from, and "that page is
+# gone" is not a thing you want to discover after the fact. What keeps a second
+# website off the screen is routing, not deletion.
+#
+# If you ever need a path deleted here, list it one per line below. Paths are
+# relative to the application root and are checked by bin/sync-apps.sh --verify.
+# Blank lines and # comments are ignored.

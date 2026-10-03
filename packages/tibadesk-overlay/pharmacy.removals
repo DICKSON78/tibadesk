@@ -1,22 +1,29 @@
 # Upstream files this integration deliberately does not ship.
 #
-# pharmacy is a module inside TibaDesk, not a product with a website of its own.
-# It brings a complete standalone marketing site — one advertising itself as a
-# pharmacy management platform, with its own landing page, team page, product
-# video and logo. routes/web.php used to answer / with that site, so the
-# application presented a second website alongside TIBADesk-website, reachable
-# on its own port and, to a signed-in user, at /apps/pharmacy/.
+# Intentionally empty.
 #
-# It is removed rather than merely unrouted: any sync restores it from upstream,
-# so a bare deletion in apps/ would not survive, and the route that served it is
-# only one edit away from serving it again.
+# This used to list public/website/ — the standalone pharmacy marketing site,
+# which routes/web.php answered / with, so the application presented a second
+# website next to TIBADesk-website. It was deleted so a sync could not put that
+# back.
 #
-# Paths are relative to the application root, and are checked by
-# bin/sync-apps.sh --verify — which is what catches a wrong prefix here.
-# One path per line. Blank lines and # comments are ignored.
+# It is now shipped again and routed nowhere. The decision is upstream files are
+# never deleted: a module that drops its author's files cannot be diffed back
+# against the source it came from, and "that file is gone" is not a thing you
+# want to discover after the fact.
 #
-# Note that public/dashboard/ is NOT listed. That is the panel's own built SPA,
-# not a website: it is the interface a pharmacy uses once signed in. It is also
+# What keeps a second website off the screen is not deletion but routing:
+# packages/tibadesk-overlay/pharmacy/routes/web.php is the overlay's own, and its
+# catch-all sends an unmatched path to the panel rather than to a website. So
+# public/website/ is inert. It is reachable as static files under /website/ only
+# if the web server is left to serve public/ directly, which is the archived copy
+# of the original site, not a front door.
+#
+# If you ever need a path deleted here, list it one per line below. Paths are
+# relative to the application root and are checked by bin/sync-apps.sh --verify.
+# Blank lines and # comments are ignored.
+#
+# Note that public/dashboard/ is not a candidate and is not listed. It is the
+# panel's own built SPA — the interface a pharmacy uses once signed in — and it is
 # absent from this repository's source tree as editable React, so it is shipped
-# pre-built and must not be removed.
-public/website
+# pre-built and must stay.

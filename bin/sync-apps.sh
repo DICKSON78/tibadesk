@@ -129,9 +129,11 @@ apply_overlay() {
 # the overlay, in <app>.removals, one app-relative path per line. Blank lines
 # and lines starting with # are ignored.
 #
-# This is not a convenience: eye is a module inside TibaDesk rather than a
-# product with its own public face, and its sixteen marketing pages would
-# otherwise reappear on the next sync and put a second website back on screen.
+# All three lists are empty on purpose. A module is not allowed to delete its
+# author's files: it would stop being diffable against the source it came from,
+# and the fix for "this app shows a second website" is that its routes belong to
+# the overlay, not that its marketing pages are destroyed. Those pages still ship
+# — they are just reached by nothing. See each <app>.removals for the specifics.
 apply_removals() {
     local name="$1"
     local list="$OVERLAY_ROOT/$name.removals"
@@ -233,7 +235,7 @@ apply_overlay dental
 apply_overlay eye
 
 echo
-echo "Applying TibaDesk removals:"
+echo "Applying TibaDesk removals (expected: none):"
 apply_removals pharmacy
 apply_removals dental
 apply_removals eye
@@ -241,5 +243,6 @@ apply_removals eye
 echo
 echo "Done. Overlays live in packages/tibadesk-overlay/ and are re-applied"
 echo "automatically on every sync. Edit the overlay, not apps/."
-echo "Files the integration does not ship are listed in <app>.removals."
+echo "apps/ mirrors upstream exactly; nothing is deleted from it, so a module"
+echo "stays diffable against the project it came from."
 echo "Check for drift with: bin/sync-apps.sh --verify"
