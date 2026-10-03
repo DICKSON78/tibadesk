@@ -25,3 +25,53 @@ _ide_helper.php
 Homestead.json
 Homestead.yaml
 Thumbs.db
+
+# The imported applications under apps/ are tracked. Each is a working copy of a
+# separate source repository, mirrored by bin/sync-apps.sh and then given the
+# TibaDesk treatment from packages/tibadesk-overlay/, so this repository is the
+# one place all three products live and nobody has to know the originals were
+# ever separate. What is left out is everything that is not source: build
+# output, dependencies, local databases and real records.
+#
+# The directories themselves are still generated, so anything rsync excludes
+# here has to be excluded in bin/sync-apps.sh as well, or a sync will hand it
+# back and it will show up as an untracked file afterwards.
+
+# Dependencies. Rebuilt from each app's own lockfiles.
+/apps/*/vendor/
+/apps/*/node_modules/
+
+# Local configuration and machine state.
+/apps/*/.env
+/apps/*/.env.backup
+/apps/*/storage/logs/
+/apps/*/storage/framework/cache/
+/apps/*/storage/framework/sessions/
+/apps/*/storage/framework/views/
+/apps/*/storage/framework/testing/
+/apps/*/storage/app/public/
+/apps/*/bootstrap/cache/*.php
+/apps/*/.phpunit.result.cache
+/apps/*/test-results/
+/apps/*/playwright-report/
+
+# Build output. `npm run build` inside an app regenerates all of it, including
+# the SPA bundle Laravel serves from public/dashboard.
+/apps/*/dist/
+/apps/*/build/
+/apps/*/public/build/
+/apps/*/public/dashboard/
+/apps/*/public/hot
+/apps/*/public/storage
+
+# Local databases and dumps. A working SQLite file is somebody's data, and a
+# .sql at the root of the pharmacy app is a multi-megabyte patient export.
+/apps/*/database/*.sqlite
+/apps/*/database/*.sqlite-journal
+/apps/*/database/*.sqlite.bak
+/apps/*/*.sql
+
+# Real records and scratch output that happened to sit in a source repository.
+/apps/dental/patient.xlsx
+/apps/*/public/images/~$*
+/apps/dental/ers')->*

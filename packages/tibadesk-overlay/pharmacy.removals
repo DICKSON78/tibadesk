@@ -1,0 +1,22 @@
+# Upstream files this integration deliberately does not ship.
+#
+# pharmacy is a module inside TibaDesk, not a product with a website of its own.
+# It brings a complete standalone marketing site — one advertising itself as a
+# pharmacy management platform, with its own landing page, team page, product
+# video and logo. routes/web.php used to answer / with that site, so the
+# application presented a second website alongside TIBADesk-website, reachable
+# on its own port and, to a signed-in user, at /apps/pharmacy/.
+#
+# It is removed rather than merely unrouted: any sync restores it from upstream,
+# so a bare deletion in apps/ would not survive, and the route that served it is
+# only one edit away from serving it again.
+#
+# Paths are relative to the application root, and are checked by
+# bin/sync-apps.sh --verify — which is what catches a wrong prefix here.
+# One path per line. Blank lines and # comments are ignored.
+#
+# Note that public/dashboard/ is NOT listed. That is the panel's own built SPA,
+# not a website: it is the interface a pharmacy uses once signed in. It is also
+# absent from this repository's source tree as editable React, so it is shipped
+# pre-built and must not be removed.
+public/website

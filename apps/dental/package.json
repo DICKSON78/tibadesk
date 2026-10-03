@@ -1,0 +1,36 @@
+{
+    "type": "module",
+    "private": true,
+    "scripts": {
+        "dev": "vite",
+        "build": "vite build",
+        "pretty": "prettier --write \"./**/*.{js,jsx,mjs,cjs,ts,tsx,json}\"",
+        "test:ui": "esbuild tools/test-ui-shim.mjs --bundle --platform=node --format=esm --loader:.js=jsx --loader:.jsx=jsx --external:react --external:react-dom --external:@fortawesome/* --outfile=.tmp/test-shim.mjs --log-level=warning && node .tmp/test-shim.mjs"
+    },
+    "dependencies": {
+        "@fortawesome/fontawesome-free": "^6.7.2",
+        "@fortawesome/fontawesome-svg-core": "^6.7.2",
+        "@fortawesome/free-solid-svg-icons": "^6.7.2",
+        "@fortawesome/react-fontawesome": "^0.2.2",
+        "@react-pdf/renderer": "^3.1.12",
+        "apexcharts": "^5.3.3",
+        "gsap": "^3.14.2",
+        "moment": "^2.30.1",
+        "qrcode.react": "^4.2.0",
+        "react": "^18.3.1",
+        "react-apexcharts": "^1.4.1",
+        "react-dom": "^18.3.1",
+        "react-router-dom": "^7.18.4",
+        "xlsx": "^0.18.5"
+    },
+    "devDependencies": {
+        "@vitejs/plugin-react": "^5.2.0",
+        "autoprefixer": "^10.6.1",
+        "axios": "^1.11.0",
+        "laravel-vite-plugin": "^2.1.0",
+        "postcss": "^8.5.28",
+        "prettier": "^3.2.5",
+        "tailwindcss": "^3.4.19",
+        "vite": "^7.3.6"
+    }
+}

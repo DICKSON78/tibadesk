@@ -1,0 +1,19 @@
+
+# The remnants of the marketing site this application used to carry: a home
+# page, an about page and a services page, the header and footer they share, and
+# the SEO component that stamped meta tags onto them. Upstream has already
+# unwired all seven — nothing routes to them and nothing imports them, which is
+# why they are merely dead rather than a second website. They are removed so
+# they cannot be relinked later, and so the next person reading this repository
+# does not find a plausible-looking home page for the module and take it for
+# the intended entry point.
+#
+# components/pdf/Footer is a different file and is used by the report and invoice
+# PDFs. It is not listed here and must not be.
+resources/js/Home.jsx
+resources/js/About.jsx
+resources/js/Services.jsx
+resources/js/Footer.jsx
+resources/js/Navbar.jsx
+resources/js/Navbar.css
+resources/js/components/SEO.jsx

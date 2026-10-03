@@ -35,4 +35,20 @@ return [
         ],
     ],
 
+    /*
+    |---------------------------------------------------------------------------
+    | TibaDesk
+    |---------------------------------------------------------------------------
+    |
+    | The shared secret the marketing website presents when it asks this
+    | application to turn an approved registration into a working facility.
+    | It is a bearer credential, so it is only ever compared and never logged;
+    | leave it unset locally to keep the activation endpoint closed.
+    |
+    */
+
+    'tibadesk' => [
+        'activation_key' => env('TIBADESK_ACTIVATION_KEY'),
+    ],
+
 ];

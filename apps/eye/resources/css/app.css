@@ -1,0 +1,20 @@
+/* Global font size reduction by 10% */
+html {
+  font-size: 90%;
+}
+
+body {
+  font-size: 90%;
+}
+
+/* Ensure all elements inherit the reduced font size */
+* {
+  font-size: inherit;
+}
+
+/* Partner item highlight in DataGrid */
+.partner-highlight {
+  background-color: #fff3e0 !important;
+  color: #e65100 !important;
+  font-weight: 600 !important;
+}

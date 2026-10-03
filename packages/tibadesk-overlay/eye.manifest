@@ -1,3 +1,9 @@
+app/Console/Commands/CompleteSetup.php
+app/Console/Commands/CompleteSystemSetup.php
+app/Console/Commands/QuickSystemSetup.php
+app/Console/Commands/ResetDatabaseAndCreateAdmin.php
+app/Console/Commands/ResetDatabaseAuto.php
+app/Console/Commands/ResetDatabaseFresh.php
 app/Http/Controllers/Auth/SsoController.php
 app/Models/User.php
 app/Support/TibadeskSso/SsoAssertion.php
@@ -5,6 +11,7 @@ app/Support/TibadeskSso/SsoUserResolver.php
 config/tibadesk_sso.php
 database/migrations/2025_08_18_170032_add_selling_price_and_expiration_to_stocktake_items_table.php
 database/migrations/2026_09_29_000000_add_tibadesk_identity_to_users_table.php
+phpunit.xml
 resources/js/bootstrap.js
 resources/js/components/App.jsx
 resources/js/components/Menu.jsx
@@ -16,7 +23,10 @@ resources/js/lib/session.js
 resources/js/pages/auth/Login.jsx
 resources/js/pages/patient-records/patient-file/CataractSurgeryRecordPDF.jsx
 resources/js/pages/payment-center/reports/DailyCashCollection.jsx
+resources/js/pages/settings/SocialMediaAccounts.jsx
 resources/js/themes/dark.js
 resources/js/themes/light.js
+resources/views/app.blade.php
 routes/api.php
+tests/Feature/TibadeskSsoTest.php
 vite.config.js

@@ -1,0 +1,565 @@
+@import '@fortawesome/fontawesome-free/css/all.css';
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* ========================================
+   BASE
+   ======================================== */
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+    background-color: #EEEEF1;
+    color: #22222A;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+#root {
+    min-height: 100vh;
+}
+
+/* Scrollbar — thin, navy tinted */
+::-webkit-scrollbar {
+    width: 6px;
+    height: 6px;
+}
+
+::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+    background: #C9C9CE;
+    border-radius: 3px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: #A6A6AE;
+}
+
+.hide-scrollbar {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+}
+
+.hide-scrollbar::-webkit-scrollbar {
+    display: none;
+}
+
+/* Focus ring — azure instead of the browser default blue */
+*:focus-visible {
+    outline: 2px solid #2D4EA8;
+    outline-offset: 2px;
+}
+
+*:focus:not(:focus-visible) {
+    outline: none;
+}
+
+/* ========================================
+   CARDS
+   ======================================== */
+
+.card {
+    @apply bg-white rounded-2xl border border-mist-200 shadow-sm p-6 transition-shadow duration-300;
+}
+.card:hover {
+    @apply shadow-card;
+}
+
+/* Inner padding for content placed inside a .card wrapper. */
+.card-body {
+    @apply p-6;
+}
+
+.stat-card {
+    @apply bg-white rounded-2xl border border-mist-200 shadow-sm p-6 transition-all duration-300;
+}
+
+.stat-card:hover {
+    box-shadow: 0 10px 25px rgba(1, 7, 54, 0.08);
+    border-color: #9DB0E8;
+    transform: translateY(-2px);
+}
+
+.stat-icon {
+    @apply w-14 h-14 rounded-xl flex items-center justify-center;
+}
+
+.quick-action {
+    @apply bg-white rounded-xl border border-mist-200 shadow-sm p-4 md:p-6 transition-all duration-300;
+}
+
+.quick-action:hover {
+    box-shadow: 0 10px 25px rgba(1, 7, 54, 0.08);
+    transform: translateY(-2px);
+}
+
+.card-enhanced {
+    @apply bg-white rounded-xl border border-mist-200 shadow-sm p-5 transition-all duration-300;
+}
+
+.card-enhanced:hover {
+    box-shadow: 0 12px 28px rgba(1, 7, 54, 0.12);
+    transform: translateY(-4px);
+}
+
+/* ========================================
+   BUTTONS
+   ======================================== */
+
+.btn {
+    @apply inline-flex items-center justify-center gap-2 font-medium transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed;
+}
+
+.btn-primary {
+    @apply btn px-5 py-2.5 bg-azure-600 text-white text-sm font-semibold rounded-xl shadow-sm;
+}
+
+.btn-primary:hover {
+    @apply bg-azure-700 shadow-md -translate-y-0.5;
+}
+
+.btn-secondary {
+    @apply btn px-5 py-2.5 border border-mist-200 bg-white text-mist-700 text-sm font-medium rounded-xl;
+}
+
+.btn-secondary:hover {
+    @apply bg-mist-50 border-mist-300;
+}
+
+.btn-danger {
+    @apply btn px-5 py-2.5 bg-red-500 text-white text-sm font-semibold rounded-xl shadow-sm;
+}
+
+.btn-danger:hover {
+    @apply bg-red-600 shadow-md -translate-y-0.5;
+}
+
+.btn-danger-outline {
+    @apply btn px-5 py-2.5 border border-red-200 bg-red-50 text-red-600 text-sm font-medium rounded-xl;
+}
+
+.btn-danger-outline:hover {
+    @apply bg-red-100 border-red-300;
+}
+
+.btn-ghost {
+    @apply btn p-2 text-mist-500 rounded-lg;
+}
+
+.btn-ghost:hover {
+    @apply bg-mist-100 text-mist-700;
+}
+
+.btn-icon-primary {
+    @apply btn p-2 text-azure-600 rounded-lg;
+}
+
+.btn-icon-primary:hover {
+    @apply bg-azure-50;
+}
+
+.btn-icon-green {
+    @apply btn p-2 text-emerald-600 rounded-lg;
+}
+
+.btn-icon-green:hover {
+    @apply bg-emerald-50;
+}
+
+.btn-icon-red {
+    @apply btn p-2 text-red-500 rounded-lg;
+}
+
+.btn-icon-red:hover {
+    @apply bg-red-50;
+}
+
+.btn-icon-amber {
+    @apply btn p-2 text-amber-500 rounded-lg;
+}
+
+.btn-icon-amber:hover {
+    @apply bg-amber-50;
+}
+
+.btn-icon-purple {
+    @apply btn p-2 text-purple-500 rounded-lg;
+}
+
+.btn-icon-purple:hover {
+    @apply bg-purple-50;
+}
+
+.btn-sm {
+    @apply px-3 py-1.5 text-xs;
+}
+
+.btn-lg {
+    @apply px-6 py-3 text-base;
+}
+
+/* ========================================
+   FORMS
+   ======================================== */
+
+.form-input {
+    @apply w-full px-4 py-3 border border-mist-200 rounded-xl outline-none transition-all duration-200 text-sm text-navy-900 bg-white;
+}
+
+.form-input:focus {
+    @apply ring-2 ring-azure-500 border-azure-500;
+}
+
+.form-input::placeholder {
+    @apply text-mist-400;
+}
+
+.form-label {
+    @apply block text-sm font-semibold text-navy-900 mb-2;
+}
+
+/* ========================================
+   TABLES
+   ======================================== */
+
+.re-table-wrap {
+    @apply bg-white rounded-2xl border border-mist-200 shadow-sm overflow-hidden;
+}
+
+.re-table {
+    @apply w-full text-sm border-collapse;
+}
+
+.re-table thead {
+    @apply bg-white;
+}
+
+.re-table thead tr {
+    @apply border-b border-mist-100 text-left text-mist-500;
+}
+
+.re-table thead th {
+    @apply px-6 py-3 font-medium whitespace-nowrap;
+}
+
+.re-table tbody tr {
+    @apply border-b border-mist-50 transition-colors duration-150;
+}
+
+.re-table tbody tr:last-child {
+    @apply border-b-0;
+}
+
+.re-table tbody tr:hover {
+    @apply bg-mist-50;
+}
+
+.re-table tbody td {
+    @apply px-6 py-3 align-top text-mist-700;
+}
+
+.re-table tfoot {
+    @apply bg-mist-50 font-semibold text-navy-900;
+}
+
+.re-table tfoot td,
+.re-table tfoot th {
+    @apply px-6 py-3;
+}
+
+/* ========================================
+   BADGES
+   ======================================== */
+
+.badge {
+    @apply inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium;
+}
+
+.badge-azure {
+    @apply bg-azure-100 text-azure-700;
+}
+
+.badge-green {
+    @apply bg-emerald-100 text-emerald-700;
+}
+
+.badge-yellow {
+    @apply bg-amber-100 text-amber-700;
+}
+
+.badge-red {
+    @apply bg-red-100 text-red-700;
+}
+
+.badge-blue {
+    @apply bg-blue-100 text-blue-700;
+}
+
+.badge-gray {
+    @apply bg-mist-100 text-mist-600;
+}
+
+.badge-purple {
+    @apply bg-purple-100 text-purple-700;
+}
+
+/* ========================================
+   ALERTS
+   ======================================== */
+
+.alert {
+    @apply flex items-start gap-3 rounded-xl border p-4 text-sm;
+}
+
+.alert-info {
+    @apply alert bg-azure-50 border-azure-200 text-azure-800;
+}
+
+.alert-success {
+    @apply alert bg-emerald-50 border-emerald-200 text-emerald-800;
+}
+
+.alert-warning {
+    @apply alert bg-amber-50 border-amber-200 text-amber-800;
+}
+
+.alert-error {
+    @apply alert bg-red-50 border-red-200 text-red-800;
+}
+
+.alert-icon {
+    @apply shrink-0 mt-0.5;
+}
+
+/* ========================================
+   TABS
+   ======================================== */
+
+.tab-nav {
+    @apply flex -mb-px overflow-x-auto border-b border-mist-200;
+}
+
+.tab-btn {
+    @apply flex-1 min-w-[120px] px-6 py-4 text-center font-medium text-sm whitespace-nowrap transition-all border-b-2;
+}
+
+.tab-btn-active {
+    @apply border-azure-600 text-azure-700;
+}
+
+.tab-btn-inactive {
+    @apply border-transparent text-mist-500;
+}
+
+.tab-btn-inactive:hover {
+    @apply text-mist-700 border-mist-300;
+}
+
+/* ========================================
+   PAGINATION
+   ======================================== */
+
+.page-btn {
+    @apply px-3 py-1.5 rounded-lg text-sm font-medium border border-mist-200 bg-white transition-all duration-200;
+}
+
+.page-btn:hover {
+    @apply bg-azure-50 border-azure-300;
+}
+
+.page-btn-active {
+    @apply bg-azure-600 text-white border-azure-600;
+}
+
+/* ========================================
+   ACTION BUTTONS
+   ======================================== */
+
+.action-btn {
+    @apply w-8 h-8 border border-mist-200 rounded-lg flex items-center justify-center text-mist-500 transition-all duration-200 text-sm;
+}
+
+.action-btn:hover {
+    @apply text-azure-700 border-azure-300 bg-azure-50;
+}
+
+/* ========================================
+   EMPTY STATE
+   ======================================== */
+
+.empty-state {
+    @apply text-center py-12 px-4;
+}
+
+.empty-state-icon {
+    @apply mx-auto w-16 h-16 rounded-full bg-mist-100 flex items-center justify-center mb-4;
+}
+
+/* ========================================
+   PROGRESS
+   ======================================== */
+
+.progress-bar {
+    @apply h-2.5 rounded-full bg-mist-200 overflow-hidden;
+}
+
+.progress-bar-fill {
+    @apply h-full rounded-full transition-all duration-500;
+}
+
+/* ========================================
+   FILTER BAR
+   ======================================== */
+
+.filter-bar {
+    @apply bg-white rounded-xl border border-mist-200 shadow-sm p-5;
+}
+
+/* ========================================
+   SIDEBAR
+   ======================================== */
+
+.sidebar-link {
+    @apply relative flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm font-medium transition-all duration-200 text-white/60 hover:text-white hover:bg-white/10;
+}
+
+.sidebar-link-active {
+    @apply text-white bg-azure-600 shadow-sm;
+}
+
+.sidebar-link-active:hover {
+    @apply text-white bg-azure-600;
+}
+
+.sidebar-badge {
+    @apply ml-auto flex items-center justify-center min-w-[20px] h-5 px-1.5 rounded-full text-[10px] font-bold bg-azure-600 text-white;
+}
+
+.sidebar-section {
+    @apply px-3 pt-4 pb-2 text-[10px] font-bold uppercase tracking-widest text-white/40;
+}
+
+/* ========================================
+   ANIMATIONS
+   ======================================== */
+
+@keyframes pageEnter {
+    from {
+        opacity: 0;
+        transform: translateY(8px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.content-area > :first-child {
+    animation: pageEnter 0.35s ease-out;
+}
+
+/* Indeterminate loading bar for form submits. */
+.animate-progress {
+    animation: progressSlide 1.1s ease-in-out infinite;
+}
+
+@keyframes progressSlide {
+    0% {
+        transform: translateX(-100%);
+    }
+    100% {
+        transform: translateX(200%);
+    }
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(-10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.animate-fadeIn {
+    animation: fadeIn 0.3s ease-out;
+}
+
+@keyframes slideIn {
+    from {
+        transform: translateX(-100%);
+    }
+    to {
+        transform: translateX(0);
+    }
+}
+
+.animate-slideIn {
+    animation: slideIn 0.3s ease-out;
+}
+
+@keyframes toastSlideIn {
+    from {
+        transform: translateX(120%);
+        opacity: 0;
+    }
+    to {
+        transform: translateX(0);
+        opacity: 1;
+    }
+}
+
+.toast-enter {
+    animation: toastSlideIn 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+@keyframes fadeUp {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.fade-up {
+    animation: fadeUp 0.5s ease-out;
+}
+
+@keyframes shimmer {
+    from {
+        background-position: -200% 0;
+    }
+    to {
+        background-position: 200% 0;
+    }
+}
+
+.shimmer {
+    background: linear-gradient(90deg, transparent 30%, rgba(45, 78, 168, 0.08) 50%, transparent 70%);
+    background-size: 200% 100%;
+    animation: shimmer 3s ease-in-out infinite;
+}
+
+/* ========================================
+   LEGACY HOOK
+   Retained so screens mid-migration keep their inherited font stack.
+   ======================================== */
+
+.legacy-scale {
+    font-family: inherit;
+}

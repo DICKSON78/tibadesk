@@ -3,7 +3,163 @@
 @source '../../vendor/laravel/framework/src/Illuminate/Pagination/resources/views/*.blade.php';
 @source '../../storage/framework/views/*.php';
 
+/*
+ * apps/ holds the imported pharmacy, dental and eye applications. They are
+ * separate Laravel apps with their own stylesheets and their own Tailwind
+ * builds, and Tailwind's automatic source detection would otherwise walk all
+ * of them and fold their class names into the ERP bundle. Each app compiles
+ * against the shared theme on its own, so nothing here needs their utilities.
+ */
+@source not '../../apps';
+
+/*
+ * TibaDesk visual language.
+ *
+ * The structure — a navy sidebar against a light canvas, generously rounded
+ * cards that lift on hover, one azure accent carrying every primary action —
+ * is the same language Medicore already ships in its resources/js/tibadesk
+ * design kit, and it is the pattern the pharmacy and eye packages are being
+ * brought onto. Phermex supplied the layout vocabulary; the colour is
+ * TibaDesk's navy, so nothing shipped here can be mistaken for the source
+ * product.
+ *
+ * Everything is a token rather than a utility, and the same token names exist
+ * in packages/tibadesk-ui/ for the three imported apps, so a change here is a
+ * change in all four codebases rather than a search across every page.
+ */
 @theme {
-    --font-sans: 'Instrument Sans', ui-sans-serif, system-ui, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji',
-        'Segoe UI Symbol', 'Noto Color Emoji';
+    /*
+     * No web font is fetched at build time on purpose. A remote font resolver
+     * makes the build depend on the network, and a clinician waiting for a page
+     * that cannot render its own text is a worse outcome than a system font.
+     */
+    --font-sans: ui-sans-serif, system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial,
+        'Apple Color Emoji', 'Segoe UI Emoji', 'Noto Color Emoji';
+
+    /*
+     * Azure is the one colour that means "act here": primary buttons, the
+     * active sidebar row, focus rings. It is tinted from the same navy as the
+     * sidebar so the two never look like separate products.
+     */
+    --color-brand-50: #f2f5fd;
+    --color-brand-100: #e6ebfa;
+    --color-brand-200: #c6d2f3;
+    --color-brand-300: #9db0e8;
+    --color-brand-400: #6e88d9;
+    --color-brand-500: #4a66c6;
+    --color-brand-600: #2d4ea8;
+    --color-brand-700: #233e86;
+    --color-brand-800: #1b3168;
+    --color-brand-900: #15254f;
+    --color-brand-950: #101b3d;
+
+    /* The sidebar ink, and the darkest text in the app. */
+    --color-ink-50: #f3f5fb;
+    --color-ink-100: #e2e7f5;
+    --color-ink-200: #c0c9e8;
+    --color-ink-300: #8e9dd2;
+    --color-ink-400: #5a6cb4;
+    --color-ink-500: #37479a;
+    --color-ink-600: #26357c;
+    --color-ink-700: #1a2660;
+    --color-ink-800: #0e1743;
+    --color-ink-900: #010736;
+    --color-ink-950: #01052b;
+
+    /* Neutral ramp. Cards and inputs sit on white; mist carries the chrome. */
+    --color-mist-50: #fafafb;
+    --color-mist-100: #f4f4f5;
+    --color-mist-200: #eeeef1;
+    --color-mist-300: #e2e2e6;
+    --color-mist-400: #c9c9d0;
+    --color-mist-500: #a6a6b0;
+    --color-mist-600: #7c7c88;
+    --color-mist-700: #5a5a65;
+    --color-mist-800: #3a3a44;
+    --color-mist-900: #22222a;
+
+    /* The working surface every card is laid on, and the card itself. */
+    --color-canvas: #eeeef1;
+    --color-surface: #ffffff;
+
+    /* Rounder than the Tailwind default, which is the single clearest cue that
+       this is the TibaDesk shell and not stock Bootstrap. */
+    --radius-2xl: 1rem;
+    --radius-3xl: 1.5rem;
+
+    /* Shadows carry the navy cast, so a lifted card belongs to the same world
+       as the page it sits on. */
+    --shadow-card: 0 1px 2px rgba(1, 7, 54, 0.04), 0 8px 24px rgba(1, 7, 54, 0.06);
+    --shadow-lift: 0 2px 4px rgba(1, 7, 54, 0.06), 0 18px 40px rgba(1, 7, 54, 0.1);
+    --shadow-sidebar: 0 8px 24px rgba(1, 7, 54, 0.24);
+
+    /* Status colours, shared with the imported apps via the Tailwind preset. */
+    --color-danger: #d64545;
+    --color-danger-soft: #fae9e9;
+    --color-info: #2d4ea8;
+    --color-info-soft: #e6ebfa;
+    --color-success: #22a06b;
+    --color-success-soft: #e4f4ec;
+    --color-warning: #d9822b;
+    --color-warning-soft: #fbf0e4;
+}
+
+/*
+ * Component classes, kept here rather than repeated as utilities in every page
+ * so the shell can be restyled without touching forty screens.
+ */
+@layer components {
+    .surface-card {
+        @apply rounded-2xl border border-mist-200 bg-surface shadow-card transition-all duration-300;
+    }
+
+    /* The website's sign-in and primary call to action, ported verbatim so the
+       ERP's guest screens and the marketing site are the same product. Solid
+       navy, lifting to azure on hover, always a full pill. */
+    .btn-asaak {
+        @apply inline-flex items-center justify-center gap-2 rounded-full border border-ink-900 bg-ink-900 px-7 py-3.5 text-sm font-semibold tracking-wide text-white transition-all duration-300;
+    }
+
+    .btn-asaak:hover:not(:disabled) {
+        @apply border-brand-600 bg-brand-600 text-white;
+        box-shadow: 0 14px 30px rgba(45, 78, 168, 0.28);
+        transform: translateY(-1px);
+    }
+
+    /* Outlined pill for light surfaces, where a navy button would be heavy. */
+    .btn-outline-dark {
+        @apply inline-flex items-center justify-center gap-2 rounded-full border border-ink-200 px-7 py-3.5 text-sm font-semibold tracking-wide text-ink-900 transition-all duration-300;
+    }
+
+    .btn-outline-dark:hover {
+        @apply border-ink-900 bg-ink-900 text-white;
+    }
+
+    /* The small uppercase label that sits above every heading. */
+    .eyebrow {
+        @apply inline-flex items-center gap-2 text-[11px] font-semibold tracking-[0.2em] uppercase;
+    }
+
+    /* Cards lift a little on hover, but only when they are actually links or
+       buttons. A read-only card that drifts under the cursor reads as broken.
+       The utilities are repeated rather than @applied from .surface-card, which
+       Tailwind cannot resolve between custom classes. */
+    .interactive-card {
+        @apply rounded-2xl border border-mist-200 bg-surface shadow-card transition-all duration-300;
+        @apply hover:-translate-y-0.5 hover:border-brand-200 hover:shadow-lift;
+    }
+
+    .stat-icon {
+        @apply flex size-12 shrink-0 items-center justify-center rounded-xl;
+    }
+
+    .page-shell {
+        @apply mx-auto w-full max-w-[1600px];
+    }
+
+    /* The sidebar sits on a navy gradient rather than flat ink, which keeps a
+       full-height dark column from reading as a black void on a bright screen. */
+    .sidebar-surface {
+        background-image: linear-gradient(180deg, #0e1743 0%, #010736 55%, #01052b 100%);
+    }
 }

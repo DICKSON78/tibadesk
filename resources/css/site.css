@@ -1,0 +1,289 @@
+/* Poppins, self-hosted so production builds never depend on a font CDN.
+   Four weights cover the design, which sets all headings extra bold. */
+@font-face {
+  font-family: 'Poppins';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url('../../fonts/poppins-latin-400-normal.woff2') format('woff2');
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC,
+    U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+@font-face {
+  font-family: 'Poppins';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url('../../fonts/poppins-latin-ext-400-normal.woff2') format('woff2');
+  unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308,
+    U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113,
+    U+2C60-2C7F, U+A720-A7FF;
+}
+@font-face {
+  font-family: 'Poppins';
+  font-style: normal;
+  font-weight: 500;
+  font-display: swap;
+  src: url('../../fonts/poppins-latin-500-normal.woff2') format('woff2');
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC,
+    U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+@font-face {
+  font-family: 'Poppins';
+  font-style: normal;
+  font-weight: 500;
+  font-display: swap;
+  src: url('../../fonts/poppins-latin-ext-500-normal.woff2') format('woff2');
+  unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308,
+    U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113,
+    U+2C60-2C7F, U+A720-A7FF;
+}
+@font-face {
+  font-family: 'Poppins';
+  font-style: normal;
+  font-weight: 600;
+  font-display: swap;
+  src: url('../../fonts/poppins-latin-600-normal.woff2') format('woff2');
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC,
+    U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+@font-face {
+  font-family: 'Poppins';
+  font-style: normal;
+  font-weight: 600;
+  font-display: swap;
+  src: url('../../fonts/poppins-latin-ext-600-normal.woff2') format('woff2');
+  unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308,
+    U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113,
+    U+2C60-2C7F, U+A720-A7FF;
+}
+@font-face {
+  font-family: 'Poppins';
+  font-style: normal;
+  font-weight: 700;
+  font-display: swap;
+  src: url('../../fonts/poppins-latin-700-normal.woff2') format('woff2');
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC,
+    U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+@font-face {
+  font-family: 'Poppins';
+  font-style: normal;
+  font-weight: 700;
+  font-display: swap;
+  src: url('../../fonts/poppins-latin-ext-700-normal.woff2') format('woff2');
+  unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308,
+    U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113,
+    U+2C60-2C7F, U+A720-A7FF;
+}
+
+/*
+ * The public site.
+ *
+ * Automatic source detection is switched off deliberately. This stylesheet is
+ * only ever loaded by the public pages, so scanning the whole project would
+ * pull the console's and the three packages' class names into a bundle that
+ * ships to every visitor of the marketing site.
+ */
+@import 'tailwindcss' source(none);
+
+@source '../js/site';
+@source '../views/site.blade.php';
+
+/*
+ * The site's palette and type, which used to live in a Tailwind 3
+ * tailwind.config.js. Tailwind 4 reads its theme from CSS, so the ramps are
+ * declared here as custom properties in the same shape the v3 config used.
+ */
+@theme {
+  /* Primary brand navy, built from the TibaDesk base colour #010736. */
+  --color-navy-50: #f3f5fb;
+  --color-navy-100: #e2e7f5;
+  --color-navy-200: #c0c9e8;
+  --color-navy-300: #8e9dd2;
+  --color-navy-400: #5a6cb4;
+  --color-navy-500: #37479a;
+  --color-navy-600: #26357c;
+  --color-navy-700: #1a2660;
+  --color-navy-800: #0e1743;
+  --color-navy-900: #010736;
+  --color-navy-950: #01052b;
+
+  /* Restrained azure accent, tinted from the same navy. */
+  --color-azure-100: #e6ebfa;
+  --color-azure-200: #c6d2f3;
+  --color-azure-300: #9db0e8;
+  --color-azure-400: #6e88d9;
+  --color-azure-500: #4a66c6;
+  --color-azure-600: #2d4ea8;
+  --color-azure-700: #233e86;
+  --color-azure-800: #1b3168;
+
+  /* Neutral ramp built from #EEEEEE. */
+  --color-mist-50: #fafafb;
+  --color-mist-100: #f4f4f5;
+  --color-mist-200: #eeeeef;
+  --color-mist-300: #e2e2e4;
+  --color-mist-400: #c9c9ce;
+  --color-mist-500: #a6a6ae;
+  --color-mist-600: #7c7c86;
+  --color-mist-700: #5a5a63;
+  --color-mist-800: #3a3a42;
+  --color-mist-900: #22222a;
+
+  /* Semantic aliases used across the site templates. */
+  --color-ink: #010736;
+  --color-ink-soft: #26357c;
+  --color-ink-muted: #5a5a63;
+  --color-brand: #2d4ea8;
+  --color-brand-soft: #e6ebfa;
+  --color-canvas: #eeeeee;
+  --color-surface: #ffffff;
+
+  --font-sans: 'Poppins', system-ui, sans-serif;
+
+  --shadow-card: 0 1px 2px rgb(1 7 54 / 4%), 0 8px 24px rgb(1 7 54 / 6%);
+  --shadow-lift: 0 2px 4px rgb(1 7 54 / 6%), 0 18px 40px rgb(1 7 54 / 10%);
+  --shadow-glow: 0 24px 60px rgb(1 7 54 / 28%);
+
+  --background-image-grid-light: linear-gradient(to right, rgb(1 7 54 / 5%) 1px, transparent 1px),
+    linear-gradient(to bottom, rgb(1 7 54 / 5%) 1px, transparent 1px);
+  --background-image-grid-dark: linear-gradient(to right, rgb(255 255 255 / 5%) 1px, transparent 1px),
+    linear-gradient(to bottom, rgb(255 255 255 / 5%) 1px, transparent 1px);
+}
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+  }
+
+  body {
+    font-family: 'Poppins', system-ui, sans-serif;
+    color: #010736;
+    background-color: #eeeeee;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  ::selection {
+    background-color: #010736;
+    color: #ffffff;
+  }
+}
+
+::-webkit-scrollbar {
+  width: 10px;
+}
+
+::-webkit-scrollbar-track {
+  background: #eeeeee;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #26357c;
+  border-radius: 999px;
+  border: 2px solid #eeeeee;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #010736;
+}
+
+* {
+  scrollbar-width: thin;
+  scrollbar-color: #26357c #eeeeee;
+}
+
+@layer utilities {
+  .hide-scrollbar::-webkit-scrollbar {
+    display: none;
+  }
+
+  .hide-scrollbar {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+
+  /* Fades a horizontal logo/module strip out at both edges. */
+  .mask-fade-x {
+    -webkit-mask-image: linear-gradient(
+      to right,
+      transparent,
+      #000 8%,
+      #000 92%,
+      transparent
+    );
+    mask-image: linear-gradient(to right, transparent, #000 8%, #000 92%, transparent);
+  }
+
+  .text-balance {
+    text-wrap: balance;
+  }
+}
+
+@layer components {
+  /* Primary pill. Solid navy, lifting to azure on hover. */
+  .btn-asaak {
+    @apply inline-flex items-center justify-center gap-2 bg-ink px-7 py-3.5 text-sm font-semibold tracking-wide text-white transition-all duration-300;
+    border: 1px solid #010736;
+    border-radius: 999px;
+  }
+
+  .btn-asaak:hover {
+    @apply bg-azure-600 text-white;
+    border-color: #2d4ea8;
+    box-shadow: 0 14px 30px rgba(45, 78, 168, 0.28);
+    transform: translateY(-1px);
+  }
+
+  /* Accent pill for dark sections, where a navy button would disappear. */
+  .btn-asaak-green {
+    @apply inline-flex items-center justify-center gap-2 bg-azure-400 px-7 py-3.5 text-sm font-semibold tracking-wide text-white transition-all duration-300;
+    border: 1px solid #6e88d9;
+    border-radius: 999px;
+  }
+
+  .btn-asaak-green:hover {
+    @apply bg-white text-ink;
+    border-color: #ffffff;
+  }
+
+  .btn-outline-light {
+    @apply inline-flex items-center justify-center gap-2 px-7 py-3.5 text-sm font-semibold tracking-wide text-white transition-all duration-300;
+    border: 1px solid rgba(255, 255, 255, 0.4);
+    border-radius: 999px;
+  }
+
+  .btn-outline-light:hover {
+    @apply bg-white text-ink;
+    border-color: #ffffff;
+  }
+
+  /* Outlined pill for light sections. */
+  .btn-outline-dark {
+    @apply inline-flex items-center justify-center gap-2 px-7 py-3.5 text-sm font-semibold tracking-wide text-ink transition-all duration-300;
+    border: 1px solid #c0c9e8;
+    border-radius: 999px;
+  }
+
+  .btn-outline-dark:hover {
+    @apply bg-ink text-white;
+    border-color: #010736;
+  }
+
+  /* Small uppercase label that sits above every section heading. */
+  .eyebrow {
+    @apply inline-flex items-center gap-2 text-[11px] font-semibold uppercase tracking-[0.2em];
+  }
+
+  .section-title {
+    @apply text-3xl font-extrabold leading-[1.15] text-ink sm:text-4xl lg:text-[2.75rem];
+  }
+
+  .card {
+    @apply rounded-2xl bg-surface shadow-card;
+  }
+
+  .card-hover {
+    @apply transition-all duration-300 hover:-translate-y-1 hover:shadow-lift;
+  }
+}

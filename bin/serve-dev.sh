@@ -1,12 +1,12 @@
 #!/usr/bin/env bash
 #
-# Start (or stop) the TibaDesk local dev stack: website -> ERP -> pharmacy.
+# Start (or stop) the TibaDesk local dev stack: ERP -> pharmacy -> dental -> eye.
 #
 # This is a development convenience only. `php artisan serve` is not a
 # production server; use PHP-FPM, Octane or Laravel Cloud for anything real.
 #
 #   bin/serve-dev.sh          restart the stack and report health
-#   bin/serve-dev.sh --stop   stop all three
+#   bin/serve-dev.sh --stop   stop all of them
 #
 # PHP_CLI_SERVER_WORKERS is not optional. The built-in server is single
 # threaded without it, so one slow request (a large built asset, a test run)
@@ -17,20 +17,23 @@ set -uo pipefail
 REPO_ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
 
 ERP_DIR="${ERP_DIR:-$REPO_ROOT}"
-SITE_DIR="${SITE_DIR:-$(dirname "$REPO_ROOT")/TIBADesk-website}"
 PHARMACY_DIR="${PHARMACY_DIR:-$ERP_DIR/apps/pharmacy}"
+DENTAL_DIR="${DENTAL_DIR:-$ERP_DIR/apps/dental}"
+EYE_DIR="${EYE_DIR:-$ERP_DIR/apps/eye}"
 LOG_DIR="${LOG_DIR:-/tmp/tibadesk-logs}"
 
-ERP_PORT="${ERP_PORT:-8010}"
-SITE_PORT="${SITE_PORT:-8000}"
+ERP_PORT="${ERP_PORT:-8000}"
 PHARMACY_PORT="${PHARMACY_PORT:-8011}"
+DENTAL_PORT="${DENTAL_PORT:-8012}"
+EYE_PORT="${EYE_PORT:-8013}"
 WORKERS="${WORKERS:-10}"
 
 # name:port:directory
 STACK=(
     "erp:$ERP_PORT:$ERP_DIR"
-    "site:$SITE_PORT:$SITE_DIR"
     "pharmacy:$PHARMACY_PORT:$PHARMACY_DIR"
+    "dental:$DENTAL_PORT:$DENTAL_DIR"
+    "eye:$EYE_PORT:$EYE_DIR"
 )
 
 port_pid() {
@@ -97,6 +100,6 @@ for entry in "${STACK[@]}"; do
 done
 
 echo
-echo "Logs: $LOG_DIR/{erp,site,pharmacy}.log"
+echo "Logs: $LOG_DIR/{erp,pharmacy,dental,eye}.log"
 [ "$status" -eq 0 ] || echo "At least one service is not responding." >&2
 exit "$status"

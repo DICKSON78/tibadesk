@@ -1,0 +1,193 @@
+import { useState, useEffect } from 'react';
+import { NavLink, Link } from 'react-router-dom';
+import { IconBars, IconClose, IconPhone, IconMail, IconHospital, IconArrow } from './icons';
+import { NAV_LINKS, SITE } from '../config';
+
+function navClass(isActive) {
+  return `relative text-xs font-semibold tracking-[1px] transition-colors duration-300 py-2 ${
+    isActive ? 'text-brand' : 'text-white/75 hover:text-white'
+  }`;
+}
+
+export default function Navbar() {
+  const [open, setOpen] = useState(false);
+  const [scrolled, setScrolled] = useState(false);
+
+  useEffect(() => {
+    const handleScroll = () => setScrolled(window.scrollY > 50);
+    window.addEventListener('scroll', handleScroll, { passive: true });
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
+
+  useEffect(() => {
+    document.body.style.overflow = open ? 'hidden' : '';
+
+    return () => {
+      document.body.style.overflow = '';
+    };
+  }, [open]);
+
+  return (
+    <>
+      <nav
+        className={`fixed top-0 left-0 right-0 z-50 border-b border-white/10 transition-all duration-300 ${
+          scrolled ? 'bg-ink/90 backdrop-blur-lg shadow-lg' : 'bg-ink'
+        }`}
+      >
+        <div className="hidden md:block border-b border-white/10">
+          <div className="max-w-7xl mx-auto px-6">
+            <div className="flex items-center justify-between h-11 text-[11px]">
+              <p className="text-white/50">
+                On-premise hospital management, installed and running inside your facility.
+              </p>
+              <div className="flex items-center gap-5">
+                {SITE.contact.phones.map((phone) => (
+                  <a
+                    key={phone.number}
+                    href={phone.href}
+                    className="flex items-center gap-1.5 text-white/60 hover:text-brand transition-colors"
+                  >
+                    <IconPhone className="w-3 h-3" />
+                    <span className="text-white/40">{phone.label}</span>
+                    <span className="font-semibold">{phone.number}</span>
+                  </a>
+                ))}
+                <a
+                  href={`mailto:${SITE.contact.email}`}
+                  className="flex items-center gap-1.5 text-white/60 hover:text-brand transition-colors"
+                >
+                  <IconMail className="w-3 h-3" />
+                  {SITE.contact.email}
+                </a>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div className="max-w-7xl mx-auto px-6">
+          <div className="flex items-center justify-between h-[72px]">
+            <Link to="/" className="flex items-center gap-3 group">
+              <span className="h-10 w-10 rounded-xl bg-brand text-ink flex items-center justify-center shadow-sm transition-transform duration-300 group-hover:scale-105">
+                <IconHospital className="w-5 h-5" />
+              </span>
+              <span className="flex flex-col leading-none">
+                <span className="text-brand font-bold text-lg tracking-wide">TibaDesk</span>
+                <span className="text-white/40 text-[9px] font-semibold tracking-[2px] uppercase mt-1">
+                  by KADETECH
+                </span>
+              </span>
+            </Link>
+
+            <div className="hidden lg:flex items-center gap-7">
+              <ul className="flex items-center gap-7">
+                {NAV_LINKS.map((link) => (
+                  <li key={link.to}>
+                    <NavLink to={link.to} className={({ isActive }) => navClass(isActive)}>
+                      {({ isActive }) => (
+                        <>
+                          {link.label}
+                          {isActive && (
+                            <span className="absolute -bottom-0.5 left-0 right-0 h-0.5 bg-brand rounded-full" />
+                          )}
+                        </>
+                      )}
+                    </NavLink>
+                  </li>
+                ))}
+              </ul>
+              <Link
+                to="/login"
+                className="text-white/75 hover:text-white px-4 py-2.5 text-xs font-bold tracking-wider transition-all duration-300"
+              >
+                SIGN IN
+              </Link>
+              <Link
+                to="/packages"
+                className="bg-brand hover:bg-brand-dark text-ink px-6 py-2.5 text-xs font-bold tracking-wider transition-all duration-300 inline-flex items-center gap-2"
+              >
+                SUBSCRIBE
+                <IconArrow className="w-3 h-3" />
+              </Link>
+            </div>
+
+            <button
+              aria-label="Toggle navigation"
+              aria-expanded={open}
+              className="lg:hidden text-white text-xl p-2"
+              onClick={() => setOpen(!open)}
+            >
+              {open ? <IconClose className="w-5 h-5" /> : <IconBars className="w-5 h-5" />}
+            </button>
+          </div>
+        </div>
+
+        {open && (
+          <div className="lg:hidden bg-ink-lighter/98 backdrop-blur-lg px-6 py-6 max-h-[calc(100vh-72px)] overflow-y-auto">
+            <ul className="flex flex-col gap-1 mb-6">
+              {NAV_LINKS.map((link) => (
+                <li key={link.to}>
+                  <NavLink
+                    to={link.to}
+                    onClick={() => setOpen(false)}
+                    className={({ isActive }) =>
+                      `block py-3 text-sm font-semibold tracking-wider border-b border-white/5 transition-colors ${
+                        isActive ? 'text-brand' : 'text-white/75'
+                      }`
+                    }
+                  >
+                    {link.label}
+                  </NavLink>
+                </li>
+              ))}
+            </ul>
+            <Link
+              to="/login"
+              onClick={() => setOpen(false)}
+              className="bg-white/10 text-white px-6 py-3 text-xs font-bold tracking-wider inline-block text-center w-full"
+            >
+              SIGN IN
+            </Link>
+            <Link
+              to="/packages"
+              onClick={() => setOpen(false)}
+              className="bg-brand text-ink px-6 py-3 text-xs font-bold tracking-wider inline-block text-center w-full mt-2"
+            >
+              SUBSCRIBE
+            </Link>
+
+            <div className="mt-6 pt-6 border-t border-white/10 space-y-2">
+              {SITE.contact.phones.map((phone) => (
+                <a
+                  key={phone.number}
+                  href={phone.href}
+                  className="flex items-center gap-2 text-xs text-white/60"
+                >
+                  <IconPhone className="w-3.5 h-3.5 text-brand" />
+                  <span className="text-white/40">{phone.label}</span>
+                  <span className="font-semibold text-white/80">{phone.number}</span>
+                </a>
+              ))}
+              <a
+                href={`mailto:${SITE.contact.email}`}
+                className="flex items-center gap-2 text-xs text-white/60"
+              >
+                <IconMail className="w-3.5 h-3.5 text-brand" />
+                {SITE.contact.email}
+              </a>
+            </div>
+          </div>
+        )}
+      </nav>
+
+      <button
+        aria-label="Back to top"
+        onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
+        className={`fixed bottom-8 right-8 z-40 w-12 h-12 rounded-full bg-brand text-ink shadow-lg hover:bg-brand-light transition-all duration-300 flex items-center justify-center ${
+          scrolled ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4 pointer-events-none'
+        }`}
+      >
+        <IconArrow className="w-4 h-4 rotate-90" />
+      </button>
+    </>
+  );
+}

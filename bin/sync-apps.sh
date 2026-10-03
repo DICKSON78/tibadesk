@@ -43,12 +43,18 @@ copy_app() {
     #                         deploy, and the version checked in is stale.
     #   storage/*            logs, sessions and compiled views
     #   *.sql                a 17 MB patient data dump living at the repo root
+    #   TibaDesk-erp/        a stale nested copy of this repository that two of
+    #                        the source repos carry. It is not part of either
+    #                        application, and mirroring it would put a second
+    #                        copy of this repo — including its overlays — inside
+    #                        every one of them.
     #
     # node_modules is excluded too, so run `npm ci` inside an app before
     # building it. The pharmacy dashboard's tree alone is about 250 MB, which
     # is more than the whole point of keeping this directory out of git.
     rsync -a --delete \
         --exclude='.git/' \
+        --exclude='TibaDesk-erp/' \
         --exclude='node_modules/' \
         --exclude='vendor/' \
         --exclude='.env' \
@@ -115,14 +121,65 @@ apply_overlay() {
     printf '  %-9s overlay re-applied (%d files)\n' "$name" "$count"
 }
 
+# Removals: upstream files this integration deliberately does not ship.
+#
+# An overlay can only add or overwrite files, so a file that has to *disappear*
+# has nowhere to live in the mirrored tree above — and copy_app's rsync would
+# restore it on every sync. The list of paths to delete therefore lives beside
+# the overlay, in <app>.removals, one app-relative path per line. Blank lines
+# and lines starting with # are ignored.
+#
+# This is not a convenience: eye is a module inside TibaDesk rather than a
+# product with its own public face, and its sixteen marketing pages would
+# otherwise reappear on the next sync and put a second website back on screen.
+apply_removals() {
+    local name="$1"
+    local list="$OVERLAY_ROOT/$name.removals"
+    local removed=0 skipped=0 rel
+
+    if [ ! -f "$list" ]; then
+        return 0
+    fi
+
+    while IFS= read -r rel || [ -n "$rel" ]; do
+        case "$rel" in
+            ''|'#'*) continue ;;
+        esac
+
+        # A committed list is still an input to rm -rf, so it is not trusted
+        # blindly: an absolute path or a parent reference could delete outside
+        # this app's directory, which is exactly the kind of thing that turns a
+        # routine sync into an incident.
+        case "$rel" in
+            /*|*..*)
+                printf '  ! %-9s refusing unsafe removal path: %s\n' "$name" "$rel" >&2
+                skipped=$((skipped + 1))
+                continue
+                ;;
+        esac
+
+        if [ -e "$APPS_DIR/$name/$rel" ]; then
+            rm -rf "${APPS_DIR:?}/$name/$rel"
+            removed=$((removed + 1))
+        fi
+    done < "$list"
+
+    if [ "$removed" -gt 0 ] || [ "$skipped" -gt 0 ]; then
+        printf '  %-9s removals applied (%d removed' "$name" "$removed"
+        [ "$skipped" -gt 0 ] && printf ', %d skipped' "$skipped"
+        printf ')\n'
+    fi
+}
+
 # Drift = an overlay file that no longer matches what is on disk in apps/.
 # This is what catches hand edits made directly in apps/ that would be lost on
 # the next sync.
 verify_overlay() {
     local name="$1"
-    local ovl="$OVERLAY_ROOT/$name" drift=0
+    local ovl="$OVERLAY_ROOT/$name" list="$OVERLAY_ROOT/$name.removals"
+    local drift=0 rel
 
-    if [ ! -d "$ovl" ]; then
+    if [ ! -d "$ovl" ] && [ ! -f "$list" ]; then
         printf '  %-9s no overlay\n' "$name"
         return 0
     fi
@@ -132,7 +189,21 @@ verify_overlay() {
             printf '  %-9s drift: %s\n' "$name" "$rel"
             drift=$((drift + 1))
         fi
-    done < <(cd "$ovl" && find . -type f -print0)
+    done < <(cd "$ovl" 2>/dev/null && find . -type f -print0)
+
+    # A removed file that is back is drift too, and a more confusing one: it
+    # looks like the removal never happened rather than like something to
+    # re-apply.
+    while IFS= read -r rel || [ -n "$rel" ]; do
+        case "$rel" in
+            ''|'#'*|/*|*..*) continue ;;
+        esac
+
+        if [ -e "$APPS_DIR/$name/$rel" ]; then
+            printf '  %-9s restored upstream file that should be removed: %s\n' "$name" "$rel"
+            drift=$((drift + 1))
+        fi
+    done < <([ -f "$list" ] && cat "$list")
 
     if [ "$drift" -eq 0 ]; then
         printf '  %-9s overlay clean\n' "$name"
@@ -162,6 +233,13 @@ apply_overlay dental
 apply_overlay eye
 
 echo
+echo "Applying TibaDesk removals:"
+apply_removals pharmacy
+apply_removals dental
+apply_removals eye
+
+echo
 echo "Done. Overlays live in packages/tibadesk-overlay/ and are re-applied"
 echo "automatically on every sync. Edit the overlay, not apps/."
+echo "Files the integration does not ship are listed in <app>.removals."
 echo "Check for drift with: bin/sync-apps.sh --verify"

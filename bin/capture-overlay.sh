@@ -85,4 +85,4 @@ while read -r rel; do
 done < "$MANIFEST"
 
 printf '%s: captured %d file(s), %s\n' "$NAME" "$count" "$(du -sh "$OVL" | cut -f1)"
-echo "Review with: git status && git diff --cached --stat"
+  echo "Review with: git status -- packages/tibadesk-overlay/$NAME.manifest packages/tibadesk-overlay/$NAME/"

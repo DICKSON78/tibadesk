@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <!-- Replaced at build time with this application's mount. -->
+    <script>/*__TIBADESK_MOUNT__*/</script>
+    <link rel="icon" type="image/png" href="./icon-192.png" />
+    <link rel="apple-touch-icon" href="./icon-192.png" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover" />
+    <meta name="theme-color" content="#010736" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+    <meta name="apple-mobile-web-app-title" content="TibaDesk" />
+    <meta name="mobile-web-app-capable" content="yes" />
+    <meta name="description" content="Find pharmacies, order medicines, and manage prescriptions near you" />
+    <link rel="manifest" href="./manifest.json" />
+    <title>TibaDesk</title>
+    <style>
+      * { -webkit-tap-highlight-color: transparent; }
+      body { overscroll-behavior: none; }
+    </style>
+  </head>
+  <body class="font-poppins">
+    <div id="root"></div>
+    <script type="module" src="/src/main.jsx"></script>
+    <script>
+      if ('serviceWorker' in navigator) {
+        window.addEventListener('load', () => {
+          // A service worker's scope is bounded by the path it is registered at,
+          // so this is registered inside the dashboard's own directory. On the
+          // origin root it would claim the whole domain — including the TibaDesk
+          // shell and the dental and eye applications sharing it — and the
+          // unregister sweep below would take their workers down with it.
+          const mount = window.__TIBADESK_MOUNT__ || '';
+          const base = `${mount}/dashboard/`;
+
+          navigator.serviceWorker.getRegistrations().then((regs) => {
+            for (const reg of regs) {
+              // Only this application's own worker, identified by its scope.
+              // Anything else on the origin belongs to somebody else.
+              if (reg.scope === new URL(base, window.location.origin + '/').href) {
+                reg.unregister();
+              }
+            }
+            navigator.serviceWorker.register(`${base}sw.js`, { scope: base }).catch(() => {});
+          });
+        });
+      }
+    </script>
+  </body>
+</html>

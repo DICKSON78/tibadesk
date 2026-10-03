@@ -7,6 +7,8 @@ database/migrations/2026_06_08_100000_add_dental_fields_to_consultations_table.p
 database/migrations/2026_08_25_162414_rename_glass_to_dental_lab_in_consultation_types.php
 database/migrations/2026_09_03_000000_sync_patient_direction_enum.php
 database/migrations/2026_09_29_000000_add_tibadesk_identity_to_users_table.php
+database/seeders/DatabaseSeeder.php
+phpunit.xml
 resources/css/app.css
 resources/js/bootstrap.js
 resources/js/components/App.jsx
@@ -23,6 +25,8 @@ resources/js/pages/NoAccess.jsx
 resources/js/themes/app.js
 resources/js/tibadesk/Dashboard.jsx
 resources/js/tibadesk/index.jsx
+resources/views/app.blade.php
 routes/api.php
 tailwind.config.js
+tests/Feature/TibadeskSsoTest.php
 vite.config.js
